@@ -1,7 +1,7 @@
 
-  # Basic display page
+  # Untitled
 
-  This is a code bundle for Basic display page. The original project is available at https://www.figma.com/design/nNOELSTTZmKRF7upr5kFWR/Basic-display-page.
+  This is a code bundle for Untitled. The original project is available at https://www.figma.com/design/BKaJCJ7F0oArPUKdefbtwQ/Untitled.
 
   ## Running the code
 

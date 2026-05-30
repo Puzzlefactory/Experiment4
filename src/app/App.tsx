@@ -1,10 +1,14 @@
+import { RouterProvider } from 'react-router/dom'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import { appTheme } from './theme'
+import { router } from './routes'
+
 export default function App() {
   return (
-    <div className="size-full flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="mb-4">Welcome to Figma Make</h1>
-        <p>Locally grown, changed and pushed</p>
-      </div>
-    </div>
-  );
+    <ThemeProvider theme={appTheme}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  )
 }

@@ -1,0 +1,129 @@
+.shell {
+  min-height: 100vh;
+  background: var(--color-surface-2);
+  color: var(--color-text-primary);
+  display: grid;
+  grid-template-columns: 17.5rem minmax(0, 1fr);
+}
+
+.sidebar {
+  background: var(--color-surface-1);
+  border-right: var(--border-rule-default);
+  padding: var(--space-pad-lg);
+}
+
+.brand,
+.headerTitle {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xl-scaled);
+  line-height: var(--font-line-height-heading);
+  font-weight: var(--font-weight-semibold);
+}
+
+.sidebarText,
+.headerText {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: var(--font-line-height-body);
+}
+
+.nav {
+  display: grid;
+  gap: var(--space-gap-xs);
+}
+
+.navLink,
+.menuItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-gap-sm);
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font: inherit;
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+}
+
+.navLink {
+  padding: var(--space-padv-sm) var(--space-pad-md);
+}
+
+.navLink:hover,
+.menuItem:hover {
+  background: var(--color-surface-3);
+}
+
+.navLinkActive {
+  background: var(--color-action-primary);
+  color: var(--color-action-primary-text);
+}
+
+.navLinkActive:hover {
+  background: var(--color-action-primary-hover);
+}
+
+.workspace {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.header {
+  background: var(--color-surface-1);
+  border-bottom: var(--border-rule-default);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-gap-md);
+  padding: var(--space-pad-md) var(--space-pad-lg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.profileMenuRoot {
+  position: relative;
+}
+
+.profileMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--space-gap-xs));
+  z-index: 20;
+  min-width: 13rem;
+  border: var(--border-rule-default);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-1);
+  box-shadow: var(--shadow-3);
+  padding: var(--space-pad-xs);
+}
+
+.menuItem {
+  width: 100%;
+  background: transparent;
+  padding: var(--space-padv-sm) var(--space-pad-sm);
+}
+
+.main {
+  min-width: 0;
+  padding: var(--space-pad-xl) 0;
+}
+
+@media (max-width: 760px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-bottom: var(--border-rule-default);
+    border-right: 0;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

@@ -1,14 +1,10 @@
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Grid from '@mui/material/Grid'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
 import { Link, useLoaderData } from 'react-router'
-import Button from '@mui/material/Button'
+import { Button, Card, CardContent, Grid, Inline, Stack } from '@klt-ui/design-system'
 import { Page } from '@/app/layouts/page'
 import { prototypeApi } from '@/app/shared/api/prototype-api'
 import type { DashboardResponse } from '@/app/shared/backend/fake-backend'
 import type { Project } from '@/app/features/projects/types'
+import styles from '@/app/routes.module.css'
 
 export async function loader() {
   return prototypeApi.get<DashboardResponse>('/dashboard')
@@ -28,43 +24,43 @@ export default function DashboardRoute() {
       title="Dashboard"
       description="This page demonstrates route-level data loading through the shared API boundary."
       actions={
-        <Button component={Link} to="/projects" variant="contained">
-          View projects
+        <Button asChild appearance="filled" intent="primary">
+          <Link to="/projects">View projects</Link>
         </Button>
       }
     >
-      <Grid container spacing={2}>
+      <Grid minCol="sm" gap="md">
         {metrics.map((metric) => (
-          <Grid key={metric.label} size={{ xs: 12, md: 4 }}>
-            <Card>
-              <CardContent>
-                <Typography color="text.secondary">{metric.label}</Typography>
-                <Typography variant="h1">{metric.value}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+          <Card key={metric.label}>
+            <CardContent>
+              <Stack gap="xs">
+                <p className={styles.metricLabel}>{metric.label}</p>
+                <p className={styles.metricValue}>{metric.value}</p>
+              </Stack>
+            </CardContent>
+          </Card>
         ))}
       </Grid>
 
       <Card>
         <CardContent>
-          <Stack spacing={2}>
-            <Typography variant="h2">Recently updated</Typography>
+          <Stack gap="md">
+            <h2 className={styles.cardTitle}>Recently updated</h2>
             {loaderData.recentProjects.map((project: Project) => (
-              <Stack
+              <Inline
                 key={project.id}
-                direction={{ xs: 'column', md: 'row' }}
-                spacing={1}
-                sx={{ justifyContent: 'space-between' }}
+                align="start"
+                gap="md"
+                justify="between"
               >
-                <Stack spacing={0.5}>
-                  <Typography sx={{ fontWeight: 700 }}>{project.name}</Typography>
-                  <Typography color="text.secondary">{project.summary}</Typography>
+                <Stack gap="xs">
+                  <h3 className={styles.projectName}>{project.name}</h3>
+                  <p className={styles.mutedText}>{project.summary}</p>
                 </Stack>
-                <Button component={Link} to={`/projects/${project.id}`}>
-                  Open
+                <Button asChild>
+                  <Link to={`/projects/${project.id}`}>Open</Link>
                 </Button>
-              </Stack>
+              </Inline>
             ))}
           </Stack>
         </CardContent>

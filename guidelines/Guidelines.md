@@ -54,7 +54,7 @@ the app frame, ask before making that change.
 
 - App shell/layout: `src/app/layouts/app-frame.tsx`
 - Page header/content wrapper: `src/app/layouts/page.tsx`
-- Theme: `src/app/theme.ts`
+- Theme provider: `src/app/App.tsx`
 - App entry: `src/app/App.tsx`
 - Route registry: `src/app/routes.tsx`
 - Loader-backed page: `src/app/routes/dashboard-route.tsx`
@@ -69,16 +69,22 @@ Copy the pattern, not the example domain.
 
 ## Design System Rules
 
-- Use MUI components and the shared theme.
+- Use `@klt-ui/design-system` for app-owned UI.
+- Use Kultera layout primitives first: `Page`, `Container`, `Stack`, `Inline`,
+  `Grid`, `Panel`, and `Card`.
+- Use Kultera controls and feedback components first: `Button`, `Input`,
+  `Select`, `Badge`, and `Modal`.
+- Do not import MUI in app-owned route, layout, feature, shared, or auth code
+  unless the user explicitly asks for a MUI experiment.
+- Do not use MUI `sx`.
 - Do not use Tailwind utility classes in app-owned code.
-- Do not add one-off CSS files for feature styling.
+- Use CSS modules for small route/layout styling that the Kultera component API
+  does not cover.
+- Keep CSS module values token-driven with Kultera CSS variables.
 - Prefer app-level wrappers such as `Page` and `AppFrame` before inventing new
   layout structures.
-- Use MUI `sx` only for layout glue such as spacing, alignment, grid, and
-  responsive sizing.
-- Do not use `sx` for one-off colors, typography, shadows, borders, or visual
-  design decisions. Put reusable visual choices in the theme or a shared
-  component.
+- Keep custom component APIs restrictive. Do not expose arbitrary styling escape
+  hatches unless the user explicitly asks for a lower-level prototype.
 
 ## Auth And Permissions
 
@@ -106,6 +112,8 @@ Copy the pattern, not the example domain.
 ## Things To Avoid
 
 - Tailwind classes.
+- MUI imports in app-owned code.
+- `sx` props.
 - Component-level fetches.
 - Giant hooks that coordinate app data.
 - New login routes.

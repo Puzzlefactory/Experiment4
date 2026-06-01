@@ -7,14 +7,16 @@ import {
   useNavigation,
   type ActionFunctionArgs,
 } from 'react-router'
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Chip from '@mui/material/Chip'
-import Divider from '@mui/material/Divider'
-import Stack from '@mui/material/Stack'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Inline,
+  Input,
+  Stack,
+} from '@klt-ui/design-system'
 import { Page } from '@/app/layouts/page'
 import type { Project } from '@/app/features/projects/types'
 import {
@@ -22,6 +24,7 @@ import {
   createProjectSchema,
   listProjects,
 } from '@/app/features/projects/projects-api'
+import styles from '@/app/routes.module.css'
 
 type ProjectsActionData = {
   ok: false
@@ -65,70 +68,74 @@ export default function ProjectsIndexRoute() {
       title="Projects"
       description="Projects are loaded through a route loader. The create form posts to a route action, which calls the shared API client."
     >
-      <Stack spacing={3}>
+      <Stack gap="lg">
         <Card>
           <CardContent>
-            <Stack component={Form} method="post" spacing={2} action="/projects">
-              <Typography variant="h2">Create project</Typography>
-              <TextField
-                error={Boolean(actionData?.errors?.name)}
-                helperText={actionData?.errors?.name?.[0]}
-                label="Project name"
-                name="name"
-              />
-              <TextField
-                error={Boolean(actionData?.errors?.summary)}
-                helperText={actionData?.errors?.summary?.[0]}
-                label="Summary"
-                multiline
-                name="summary"
-                rows={3}
-              />
-              <Button disabled={isSubmitting} type="submit" variant="contained">
-                {isSubmitting ? 'Creating...' : 'Create project'}
-              </Button>
-            </Stack>
+            <Form method="post" action="/projects" className={styles.form}>
+              <Stack gap="md">
+                <h2 className={styles.cardTitle}>Create project</h2>
+                <div className={styles.fieldStack}>
+                  <label className={styles.label} htmlFor="project-name">
+                    Project name
+                  </label>
+                  <Input
+                    id="project-name"
+                    name="name"
+                    validationState={actionData?.errors?.name ? 'error' : 'none'}
+                    width="full"
+                  />
+                  {actionData?.errors?.name?.[0] ? (
+                    <p className={styles.fieldError}>{actionData.errors.name[0]}</p>
+                  ) : null}
+                </div>
+                <div className={styles.fieldStack}>
+                  <label className={styles.label} htmlFor="project-summary">
+                    Summary
+                  </label>
+                  <textarea
+                    className={styles.textarea}
+                    id="project-summary"
+                    name="summary"
+                  />
+                  {actionData?.errors?.summary?.[0] ? (
+                    <p className={styles.fieldError}>{actionData.errors.summary[0]}</p>
+                  ) : null}
+                </div>
+                <Button
+                  appearance="filled"
+                  disabled={isSubmitting}
+                  intent="primary"
+                  type="submit"
+                >
+                  {isSubmitting ? 'Creating...' : 'Create project'}
+                </Button>
+              </Stack>
+            </Form>
           </CardContent>
         </Card>
 
-        <Stack spacing={2}>
+        <Stack gap="md">
           {loaderData.projects.map((project: Project) => (
             <Card key={project.id}>
               <CardContent>
-                <Stack spacing={2}>
-                  <Stack
-                    direction={{ xs: 'column', md: 'row' }}
-                    spacing={1}
-                    sx={{ justifyContent: 'space-between' }}
-                  >
-                    <Stack spacing={0.5}>
-                      <Typography variant="h2">{project.name}</Typography>
-                      <Typography color="text.secondary">
-                        {project.summary}
-                      </Typography>
+                <Stack gap="md">
+                  <Inline align="start" gap="md" justify="between">
+                    <Stack gap="xs">
+                      <h2 className={styles.projectName}>{project.name}</h2>
+                      <p className={styles.mutedText}>{project.summary}</p>
                     </Stack>
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      sx={{ alignItems: 'center' }}
-                    >
-                      <Chip label={project.status} />
-                      <Chip color={healthColor(project.health)} label={project.health} />
-                    </Stack>
-                  </Stack>
+                    <Inline gap="xs" wrap="wrap">
+                      <Badge>{project.status}</Badge>
+                      <Badge variant={healthVariant(project.health)}>{project.health}</Badge>
+                    </Inline>
+                  </Inline>
                   <Divider />
-                  <Stack
-                    direction={{ xs: 'column', md: 'row' }}
-                    spacing={1}
-                    sx={{ justifyContent: 'space-between' }}
-                  >
-                    <Typography color="text.secondary">
-                      Owner: {project.owner}
-                    </Typography>
-                    <Button component={Link} to={`/projects/${project.id}`}>
-                      Open detail
+                  <Inline gap="md" justify="between">
+                    <p className={styles.metaText}>Owner: {project.owner}</p>
+                    <Button asChild>
+                      <Link to={`/projects/${project.id}`}>Open detail</Link>
                     </Button>
-                  </Stack>
+                  </Inline>
                 </Stack>
               </CardContent>
             </Card>
@@ -139,9 +146,9 @@ export default function ProjectsIndexRoute() {
   )
 }
 
-function healthColor(health: string): 'success' | 'warning' | 'error' {
+function healthVariant(health: string): 'success' | 'warning' | 'danger' {
   if (health === 'at-risk') {
-    return 'error'
+    return 'danger'
   }
 
   if (health === 'watch') {

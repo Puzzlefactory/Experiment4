@@ -1,12 +1,8 @@
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Chip from '@mui/material/Chip'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
 import { Link, useLoaderData, type LoaderFunctionArgs } from 'react-router'
+import { Badge, Button, Card, CardContent, Inline, Stack } from '@klt-ui/design-system'
 import { Page } from '@/app/layouts/page'
 import { getProject } from '@/app/features/projects/projects-api'
+import styles from '@/app/routes.module.css'
 
 export async function loader({ params }: LoaderFunctionArgs) {
   if (!params.projectId) {
@@ -26,22 +22,22 @@ export default function ProjectDetailRoute() {
       title={project.name}
       description={project.summary}
       actions={
-        <Button component={Link} to="/projects" variant="outlined">
-          Back to projects
+        <Button asChild>
+          <Link to="/projects">Back to projects</Link>
         </Button>
       }
     >
       <Card>
         <CardContent>
-          <Stack spacing={2}>
-            <Stack direction="row" spacing={1}>
-              <Chip label={project.status} />
-              <Chip label={project.health} />
-            </Stack>
-            <Typography>Owner: {project.owner}</Typography>
-            <Typography color="text.secondary">
+          <Stack gap="md">
+            <Inline gap="xs" wrap="wrap">
+              <Badge>{project.status}</Badge>
+              <Badge>{project.health}</Badge>
+            </Inline>
+            <p className={styles.bodyText}>Owner: {project.owner}</p>
+            <p className={styles.metaText}>
               Updated: {new Date(project.updatedAt).toLocaleString()}
-            </Typography>
+            </p>
           </Stack>
         </CardContent>
       </Card>

@@ -1,9 +1,5 @@
-import Alert from '@mui/material/Alert'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
 import { createBrowserRouter, isRouteErrorResponse, Link, Outlet, useRouteError } from 'react-router'
+import { Button, Container, Panel, Stack } from '@klt-ui/design-system'
 import { AppFrame } from './layouts/app-frame'
 import DashboardRoute, { loader as dashboardLoader } from './routes/dashboard-route'
 import ProjectsIndexRoute, {
@@ -15,6 +11,7 @@ import ProjectDetailRoute, {
 } from './routes/project-detail-route'
 import SettingsRoute, { loader as settingsLoader } from './routes/settings-route'
 import NotFoundRoute from './not-found-route'
+import styles from './routes.module.css'
 
 export const router = createBrowserRouter([
   {
@@ -73,15 +70,19 @@ function AppRouteError() {
 
   return (
     <AppFrame>
-      <Box sx={{ p: 3 }}>
-        <Stack spacing={2}>
-          <Alert severity="warning">{title}</Alert>
-          <Typography>{message}</Typography>
-          <Button component={Link} to="/" variant="contained">
-            Back to dashboard
+      <Container size="lg" padX="gutter">
+        <Stack gap="md">
+          <Panel surface="warning" pad="lg">
+            <Stack gap="md">
+              <h1 className={styles.errorTitle}>{title}</h1>
+              <p className={styles.mutedText}>{message}</p>
+            </Stack>
+          </Panel>
+          <Button asChild appearance="filled" intent="primary">
+            <Link to="/">Back to dashboard</Link>
           </Button>
         </Stack>
-      </Box>
+      </Container>
     </AppFrame>
   )
 }

@@ -1,14 +1,11 @@
-import Alert from '@mui/material/Alert'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
 import { useLoaderData } from 'react-router'
+import { Badge, Card, CardContent, Stack } from '@klt-ui/design-system'
 import { Page } from '@/app/layouts/page'
 import { loadPrototypeSession } from '@/app/shared/auth/session-storage'
 import { prototypeRolePolicy } from '@/app/shared/auth/policy'
 import { prototypePermissions, prototypeRoles } from '@/app/shared/auth/roles'
 import type { PrototypeRoleDefinition } from '@/app/shared/auth/types'
+import styles from '@/app/routes.module.css'
 
 export async function loader() {
   const session = loadPrototypeSession()
@@ -28,19 +25,19 @@ export default function SettingsRoute() {
       title="Settings"
       description="This route demonstrates permission-gated access through the shared role policy."
     >
-      <Stack spacing={2}>
-        <Alert severity="info">
+      <Stack gap="md">
+        <Badge variant="info">
           Current role: {loaderData.session?.user.role ?? 'none selected'}
-        </Alert>
+        </Badge>
         {loaderData.roles.map((role: PrototypeRoleDefinition) => (
           <Card key={role.role}>
             <CardContent>
-              <Stack spacing={1}>
-                <Typography variant="h2">{role.label ?? role.role}</Typography>
-                <Typography color="text.secondary">{role.description}</Typography>
-                <Typography variant="body2">
+              <Stack gap="sm">
+                <h2 className={styles.cardTitle}>{role.label ?? role.role}</h2>
+                <p className={styles.mutedText}>{role.description}</p>
+                <p className={styles.metaText}>
                   Permissions: {role.permissions.join(', ')}
-                </Typography>
+                </p>
               </Stack>
             </CardContent>
           </Card>

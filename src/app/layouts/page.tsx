@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
+import { Container, Inline, Page as KulteraPage, Stack } from '@klt-ui/design-system'
+import styles from './page.module.css'
 
 interface PageProps {
   title: string
@@ -20,33 +18,22 @@ export function Page({
   children,
 }: PageProps) {
   return (
-    <Container maxWidth="xl">
-      <Stack spacing={3}>
-        <Stack
-          direction={{ xs: 'column', md: 'row' }}
-          spacing={2}
-          sx={{
-            alignItems: { xs: 'stretch', md: 'flex-start' },
-            justifyContent: 'space-between',
-          }}
-        >
-          <Box>
-            {eyebrow ? (
-              <Typography color="primary" sx={{ fontWeight: 700 }} variant="overline">
-                {eyebrow}
-              </Typography>
-            ) : null}
-            <Typography variant="h1">{title}</Typography>
-            {description ? (
-              <Typography color="text.secondary" sx={{ maxWidth: 760 }}>
-                {description}
-              </Typography>
-            ) : null}
-          </Box>
-          {actions ? <Box>{actions}</Box> : null}
-        </Stack>
-        {children}
-      </Stack>
-    </Container>
+    <KulteraPage>
+      <KulteraPage.Body>
+        <Container size="xl" padX="gutter">
+          <Stack gap="lg">
+            <Inline align="start" justify="between" gap="md">
+              <Stack gap="xs">
+                {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
+                <h1 className={styles.title}>{title}</h1>
+                {description ? <p className={styles.description}>{description}</p> : null}
+              </Stack>
+              {actions ? <div className={styles.actions}>{actions}</div> : null}
+            </Inline>
+            {children}
+          </Stack>
+        </Container>
+      </KulteraPage.Body>
+    </KulteraPage>
   )
 }

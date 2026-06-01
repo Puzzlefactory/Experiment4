@@ -1,13 +1,10 @@
 import { RouterProvider } from 'react-router/dom'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import { appTheme } from './theme'
+import { ThemeProvider } from '@klt-ui/design-system'
 import { router } from './routes'
 
 export default function App() {
   return (
-    <ThemeProvider theme={appTheme}>
-      <CssBaseline />
+    <ThemeProvider brand="kultera" theme="light" density="cozy" motion="on">
       <RouterProvider router={router} />
     </ThemeProvider>
   )

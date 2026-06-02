@@ -1,0 +1,15 @@
+.copy {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--space-gap-sm);
+}
+
+.poweredByLogo {
+  block-size: 2.75rem;
+  display: block;
+  inline-size: auto;
+}
+
+.copy {
+  color: var(--color-text-secondary);
+}

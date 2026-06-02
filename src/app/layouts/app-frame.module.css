@@ -1,0 +1,20 @@
+.brandMark {
+  align-items: center;
+  background: var(--color-brand-accent);
+  border-radius: var(--radius-sm);
+  color: var(--color-brand-on-accent);
+  display: inline-flex;
+  font-size: var(--font-size-sm-scaled);
+  font-weight: var(--font-weight-semibold);
+  block-size: var(--action-icon-size-lg);
+  inline-size: var(--action-icon-size-lg);
+  justify-content: center;
+}
+
+.brandText {
+  color: var(--color-surface-brand-fg-default);
+  font-size: var(--font-size-xl-scaled);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-tight);
+  white-space: nowrap;
+}

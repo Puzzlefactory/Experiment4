@@ -148,7 +148,8 @@ function AccountActions({
         portalContainer={overlayRoot ?? undefined}
         trigger={
           <Button
-            appearance="ghost"
+            appearance="filled"
+            intent="primary"
             aria-label="Open profile menu"
             shape="round"
             size="icon"

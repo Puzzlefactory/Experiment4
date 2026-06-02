@@ -6,7 +6,9 @@ Keep the Make/Vite entrypoint shape in place:
 
 - `index.html` loads `/src/main.tsx`
 - `src/main.tsx` renders `src/app/App.tsx`
-- `src/app/App.tsx` installs providers and renders the React Router provider
+- `src/app/App.tsx` renders the React Router provider
+- `src/app/layouts/app-frame.tsx` owns the Kultera app shell through
+  `@klt-ui/composition/AppFrame`
 
 Figma Make expects this entrypoint shape. Do not convert this project to React
 Router framework mode, do not delete `src/main.tsx`, and do not replace
@@ -53,8 +55,9 @@ the app frame, ask before making that change.
 ## Existing Patterns To Follow
 
 - App shell/layout: `src/app/layouts/app-frame.tsx`
-- Page header/content wrapper: `src/app/layouts/page.tsx`
-- Theme provider: `src/app/App.tsx`
+- Page setup: route modules use `Page fill`, `Page.Header`, `Page.Body`, and
+  `Page.Footer` from `@klt-ui/design-system`
+- Theme provider: `@klt-ui/composition/AppFrame`
 - App entry: `src/app/App.tsx`
 - Route registry: `src/app/routes.tsx`
 - Loader-backed page: `src/app/routes/dashboard-route.tsx`
@@ -69,20 +72,32 @@ Copy the pattern, not the example domain.
 
 ## Design System Rules
 
-- Use `@klt-ui/design-system` for app-owned UI.
-- Use Kultera layout primitives first: `Page`, `Container`, `Stack`, `Inline`,
-  `Grid`, `Panel`, and `Card`.
+- Use `@klt-ui/composition/AppFrame` for the app shell.
+- Do not recreate `AppFrame` with local CSS, local grids, sidebars, drawers, or
+  app-level wrapper components.
+- Use brand `"le"` for this starter.
+- Use `HeaderBar` and `NavLinks` from `@klt-ui/design-system` for primary
+  navigation inside the `AppFrame` header slot.
+- Wrap the app shell in `ModalManagerProvider`.
+- Portal shell dropdowns and modals into the AppFrame overlay root through
+  `useAppFrameOverlayRoot()` when the component API accepts `portalContainer`.
+- When a dropdown action opens a modal, open the modal after the dropdown closes
+  instead of opening both overlay layers in the same event turn.
+- Use route-level `Page fill`, `Page.Header`, `Page.Body`, and `Page.Footer`.
+- Use `FooterBar` from `@klt-ui/design-system` through the local
+  `src/app/shared/ui/app-footer.tsx` wrapper.
+- Use `@klt-ui/design-system` components for app-owned UI.
+- Use Kultera layout primitives first: `Container`, `Stack`, `Inline`, `Grid`,
+  `Panel`, and `Card`.
 - Use Kultera controls and feedback components first: `Button`, `Input`,
-  `Select`, `Badge`, and `Modal`.
+  `Select`, `Badge`, `DropdownMenu`, and `Modal`.
 - Do not import MUI in app-owned route, layout, feature, shared, or auth code
   unless the user explicitly asks for a MUI experiment.
 - Do not use MUI `sx`.
 - Do not use Tailwind utility classes in app-owned code.
-- Use CSS modules for small route/layout styling that the Kultera component API
-  does not cover.
-- Keep CSS module values token-driven with Kultera CSS variables.
-- Prefer app-level wrappers such as `Page` and `AppFrame` before inventing new
-  layout structures.
+- Keep CSS light, local, and token-based. CSS modules are acceptable for route
+  hero layout, small brand marks, and footer details that the component API does
+  not cover.
 - Keep custom component APIs restrictive. Do not expose arbitrary styling escape
   hatches unless the user explicitly asks for a lower-level prototype.
 
@@ -114,6 +129,9 @@ Copy the pattern, not the example domain.
 - Tailwind classes.
 - MUI imports in app-owned code.
 - `sx` props.
+- Local recreation of `AppFrame`.
+- Local page wrapper components that hide the `Page.Header` / `Page.Body` /
+  `Page.Footer` pattern.
 - Component-level fetches.
 - Giant hooks that coordinate app data.
 - New login routes.

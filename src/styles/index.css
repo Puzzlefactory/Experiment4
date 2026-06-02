@@ -3,8 +3,12 @@ body {
   min-height: 100%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background: var(--color-surface-2);
+  background: var(--color-surface-1);
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
   font-size: var(--font-size-md-scaled);

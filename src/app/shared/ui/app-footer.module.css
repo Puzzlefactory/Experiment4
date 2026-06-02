@@ -1,8 +1,15 @@
+.brand,
+.copy {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--space-gap-sm);
+}
+
 .brandMark {
   align-items: center;
-  background: var(--color-brand-accent);
+  border: var(--border-rule-default);
   border-radius: var(--radius-sm);
-  color: var(--color-brand-on-accent);
+  color: var(--color-text-primary);
   display: inline-flex;
   font-size: var(--font-size-sm-scaled);
   font-weight: var(--font-weight-semibold);
@@ -11,10 +18,6 @@
   justify-content: center;
 }
 
-.brandText {
-  color: var(--color-surface-brand-fg-default);
-  font-size: var(--font-size-xl-scaled);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--font-line-height-tight);
-  white-space: nowrap;
+.copy {
+  color: var(--color-text-secondary);
 }

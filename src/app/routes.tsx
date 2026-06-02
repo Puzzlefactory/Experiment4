@@ -1,6 +1,7 @@
 import { createBrowserRouter, isRouteErrorResponse, Link, Outlet, useRouteError } from 'react-router'
-import { Button, Container, Panel, Stack } from '@klt-ui/design-system'
+import { Button, Container, Page, Panel, Stack } from '@klt-ui/design-system'
 import { AppFrame } from './layouts/app-frame'
+import { AppFooter } from './shared/ui/app-footer'
 import DashboardRoute, { loader as dashboardLoader } from './routes/dashboard-route'
 import ProjectsIndexRoute, {
   action as projectsAction,
@@ -11,7 +12,7 @@ import ProjectDetailRoute, {
 } from './routes/project-detail-route'
 import SettingsRoute, { loader as settingsLoader } from './routes/settings-route'
 import NotFoundRoute from './not-found-route'
-import styles from './routes.module.css'
+import styles from './routes/route-pages.module.css'
 
 export const router = createBrowserRouter([
   {
@@ -70,19 +71,27 @@ function AppRouteError() {
 
   return (
     <AppFrame>
-      <Container size="lg" padX="gutter">
-        <Stack gap="md">
-          <Panel surface="warning" pad="lg">
+      <Page fill>
+        <Page.Header />
+        <Page.Body>
+          <Container size="lg" padX="gutter" padding="lg">
             <Stack gap="md">
-              <h1 className={styles.errorTitle}>{title}</h1>
-              <p className={styles.mutedText}>{message}</p>
+              <Panel surface="warning" pad="lg">
+                <Stack gap="sm">
+                  <h1 className={styles.title}>{title}</h1>
+                  <p className={styles.mutedText}>{message}</p>
+                </Stack>
+              </Panel>
+              <Button asChild appearance="filled" intent="primary">
+                <Link to="/">Back to home</Link>
+              </Button>
             </Stack>
-          </Panel>
-          <Button asChild appearance="filled" intent="primary">
-            <Link to="/">Back to dashboard</Link>
-          </Button>
-        </Stack>
-      </Container>
+          </Container>
+        </Page.Body>
+        <Page.Footer>
+          <AppFooter />
+        </Page.Footer>
+      </Page>
     </AppFrame>
   )
 }

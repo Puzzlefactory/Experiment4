@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useRevalidator } from 'react-router'
+import { useAppFrameOverlayRoot } from '@klt-ui/composition'
 import { Button, Modal, Select, Stack } from '@klt-ui/design-system'
 import { prototypeRoles } from '@/app/shared/auth/roles'
 import { createSessionForRole } from '@/app/shared/auth/session-factory'
@@ -16,13 +16,12 @@ export function RoleSwitcherDialog({
   open,
   onClose,
 }: RoleSwitcherDialogProps) {
-  const revalidator = useRevalidator()
+  const overlayRoot = useAppFrameOverlayRoot()
   const [role, setRole] = useState(prototypeRoles[0]?.role ?? 'admin')
 
-  function handleLogin() {
+  function handleLogin(close: () => void) {
     onSessionSelected(createSessionForRole(role))
-    revalidator.revalidate()
-    onClose()
+    close()
   }
 
   return (
@@ -33,14 +32,15 @@ export function RoleSwitcherDialog({
           onClose()
         }
       }}
+      portalContainer={overlayRoot ?? undefined}
       size="sm"
       title="Select a prototype role"
-      description="This prototype uses a role switcher instead of a real login screen. Choosing a role creates an Auth0-shaped prototype JWT and updates route loaders through the shared API boundary."
-      footer={
-        <Button appearance="filled" intent="primary" onClick={handleLogin}>
+      description="This starter uses a role switcher instead of a real login screen. Choosing a role creates an Auth0-shaped prototype JWT and updates route loaders through the shared API boundary."
+      footer={({ close }) => (
+        <Button appearance="filled" intent="primary" onClick={() => handleLogin(close)}>
           Continue
         </Button>
-      }
+      )}
     >
       <Stack gap="md">
         <Select

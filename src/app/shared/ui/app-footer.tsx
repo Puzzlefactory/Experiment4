@@ -1,4 +1,5 @@
 import { FooterBar } from '@klt-ui/design-system'
+import poweredByLogo from '@/app/assets/powered-by-logo-light.svg'
 import styles from './app-footer.module.css'
 
 export function AppFooter() {
@@ -7,12 +8,11 @@ export function AppFooter() {
       border
       muted
       start={
-        <span className={styles.brand}>
-          <span className={styles.brandMark} aria-hidden="true">
-            LE
-          </span>
-          <span>Powered by Kultera</span>
-        </span>
+        <img
+          alt="Powered by Kultera"
+          className={styles.poweredByLogo}
+          src={poweredByLogo}
+        />
       }
       end={<span className={styles.copy}>Copyright 2026 Kultera</span>}
     />

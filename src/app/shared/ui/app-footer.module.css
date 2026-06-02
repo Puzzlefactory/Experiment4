@@ -1,21 +1,13 @@
-.brand,
 .copy {
   align-items: center;
   display: inline-flex;
   gap: var(--space-gap-sm);
 }
 
-.brandMark {
-  align-items: center;
-  border: var(--border-rule-default);
-  border-radius: var(--radius-sm);
-  color: var(--color-text-primary);
-  display: inline-flex;
-  font-size: var(--font-size-sm-scaled);
-  font-weight: var(--font-weight-semibold);
-  block-size: var(--action-icon-size-lg);
-  inline-size: var(--action-icon-size-lg);
-  justify-content: center;
+.poweredByLogo {
+  block-size: 2.75rem;
+  display: block;
+  inline-size: auto;
 }
 
 .copy {
